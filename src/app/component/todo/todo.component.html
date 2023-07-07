@@ -1,0 +1,111 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 mat-form">
+      <form [formGroup]="todoForm" onsubmit="">
+        <mat-card class="p-3 my-3">
+          <mat-form-field class="bg-white" appearance="outline">
+            <mat-label> Task Name</mat-label>
+            <input formControlName="todo" matInput placeholder="Task Name" />
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-error>this field is required</mat-error>
+          </mat-form-field>
+          <button *ngIf="!isEditEnable"
+            class="btn btnadd text-white"
+            [disabled]="todoForm.invalid"
+            type="submit" (click)="addTask()"
+          >
+            Add
+          </button>
+          <button *ngIf="isEditEnable"
+          class="btn btn-primary"
+          [disabled]="todoForm.invalid"
+          type="submit" (click)="updateTask()"
+        >
+          Update
+        </button>
+        </mat-card>
+      </form>
+    </div>
+    <div class="col-md-9 list-items">
+      <div cdkDropListGroup>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="example-container">
+                <h2 class="headings m-0 mt-3 text-danger">Task List <span  *ngIf="task.length>0">{{task.length}}</span></h2>
+            
+                <div
+                  cdkDropList
+                  [cdkDropListData]="task"
+                  class="example-list"
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="example-box " *ngFor=" let i = index;let item of task; " cdkDrag>{{item.description}}
+                    <div class="icons">
+                        <button mat-icon-button color="warn" (click)="deleteTask(i)">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                          <button mat-icon-button color="primary" (click)="onEdit(item,i)">
+                            <mat-icon>edit</mat-icon>
+                          </button>
+                      </div>
+                   
+
+                  </div>
+                
+                </div>
+              </div>
+            
+            
+          </div>
+         
+          <div class="col-md-4">
+            <div class="example-container">
+                <h2 class="headings m-0 mt-3 text-danger">Work On Progress <span  *ngIf="progress.length>0">{{progress.length}}</span></h2>
+            
+                <div
+                  cdkDropList
+                  [cdkDropListData]="progress"
+                  class="example-list"
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="example-box" *ngFor="let item of progress;let i=index" cdkDrag>{{item.description}}
+
+                    <div class="icons">
+                      <button mat-icon-button color="warn" (click)="deleteProgressTask(i)">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                       
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+            <div class="example-container">
+                <h2 class="headings m-0 mt-3 text-danger">Compleated  <span  *ngIf="compleated.length>0">{{compleated.length}}</span></h2>
+            
+                <div
+                  cdkDropList
+                  [cdkDropListData]="compleated"
+                  class="example-list "
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="example-box" *ngFor="let item of compleated ;let i = index" cdkDrag>{{item.description}}
+                    <div class="icons">
+                      <button mat-icon-button color="warn" (click)="deleteCompleatesTask(i)">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                        <button mat-icon-button class="compleate-icon" (click)="deleteCompleatesTask(i)">
+                          <mat-icon>check_circle</mat-icon>
+                        </button>
+                       
+                       
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
